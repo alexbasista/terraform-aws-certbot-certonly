@@ -1,6 +1,7 @@
 # terraform-aws-certbot-certonly
 Terraform module to automatically create a Let's Encrypt certificate via Certbot on an AWS EC2 instance, and then copy the certificate files to an existing S3 bucket of choice.
 
+
 ## Usage
 ```hcl
 module "certbot" {
@@ -12,3 +13,7 @@ module "certbot" {
   subnet_id           = "subnet-abcdefghijk123456"
   output_bucket       = "my-s3-bucket-name"
 }
+```
+
+## Roadmap
+- Add ability to output certs to Secrets Manager in specific formats
