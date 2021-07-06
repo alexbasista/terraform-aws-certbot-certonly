@@ -6,9 +6,9 @@ Terraform module to automatically create a Let's Encrypt certificate via Certbot
 module "certbot" {
   source = "github.com/alexbasista/terraform-aws-certbot-certonly.git"
 
-  cert_fqdn              = "my-new-cert.example.com"
-  cert_email             = "my-email-addr@example.com"
-  route53_hosted_zone    = "example.com"
-  subnet_id              = "subnet-abcdefghijk123456"
-  output_bucket          = "my-s3-bucket-name"
+  cert_fqdn           = "my-new-cert.example.com"
+  cert_email          = "my-email-addr@example.com"
+  route53_hosted_zone = "example.com"
+  subnet_id           = "subnet-abcdefghijk123456"
+  output_bucket       = "my-s3-bucket-name"
 }
