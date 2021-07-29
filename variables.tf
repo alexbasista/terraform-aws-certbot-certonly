@@ -34,3 +34,8 @@ variable "output_bucket" {
     type        = string
     description = "Existing S3 bucket to write the certificate files to."
 }
+
+variable "common_tags" {
+    type    = map(string)
+    default = {}
+}

@@ -46,10 +46,7 @@ resource "aws_instance" "ubuntu_certbot" {
     volume_type           = "gp2"
   }
 
-  tags = {
-    Name = "ubuntu-certbot-ec2"
-  }
-}
+  tags = var.common_tags
 
 resource "aws_security_group" "ubuntu_certbot" {
   name   = "ubuntu-certbot-allow"
