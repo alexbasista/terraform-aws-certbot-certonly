@@ -4,7 +4,11 @@ data "aws_s3_bucket" "output_bucket" {
 
 resource "aws_iam_role" "ubuntu_certbot" {
   name = "ubuntu-certbot-iam-role"
-  tags = { Name = "ubuntu-certbot-iam-role" }
+  tags = merge({
+    "Name" = "ubuntu-certbot-iam-role"
+    },
+    var.common_tags
+  )
 
   assume_role_policy = <<POLICY
 {
@@ -25,6 +29,11 @@ POLICY
 
 resource "aws_iam_policy" "ubuntu_certbot" {
   name = "ubuntu-certbot-iam-policy"
+  tags = merge({
+    "Name" = "ubuntu-certbot-iam-policy"
+    },
+    var.common_tags
+  )
 
   policy = <<POLICY
 {
@@ -54,4 +63,9 @@ resource "aws_iam_instance_profile" "ubuntu_certbot" {
   name = "ubuntu-certbot-instance-profile"
   path = "/"
   role = aws_iam_role.ubuntu_certbot.name
+  tags = merge({
+    "Name" = "ubuntu-certbot-instance-profile"
+    },
+    var.common_tags
+  )
 }

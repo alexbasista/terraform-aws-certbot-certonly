@@ -56,6 +56,12 @@ resource "aws_instance" "ubuntu_certbot" {
 resource "aws_security_group" "ubuntu_certbot" {
   name   = "ubuntu-certbot-allow"
   vpc_id = data.aws_subnet.subnet.vpc_id
+
+  tags = merge({
+    "Name" = "certbot-sg"
+    },
+    var.common_tags
+  )
 }
 
 resource "aws_security_group_rule" "ssh" {
