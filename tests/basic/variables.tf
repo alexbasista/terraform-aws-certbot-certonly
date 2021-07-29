@@ -39,3 +39,9 @@ variable "common_tags" {
     type    = map(string)
     default = {}
 }
+
+variable "instance_type" {
+  type = string
+  description = "Size of EC2 instance."
+  default = "t2.micro"
+}
