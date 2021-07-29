@@ -45,7 +45,7 @@ POLICY
 }
 
 resource "aws_iam_policy_attachment" "ubuntu_certbot" {
-  name = "ubuntu-certbot-iam-policy-attachment"
+  name       = "ubuntu-certbot-iam-policy-attachment"
   roles      = [aws_iam_role.ubuntu_certbot.name]
   policy_arn = aws_iam_policy.ubuntu_certbot.arn
 }

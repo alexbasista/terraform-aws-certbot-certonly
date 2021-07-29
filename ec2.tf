@@ -47,7 +47,7 @@ resource "aws_instance" "ubuntu_certbot" {
   }
 
   tags = merge({
-    "Name"          = "certbot-tfe-ec2-launch-template"
+    "Name" = "certbot-ec2"
     },
     var.common_tags
   )
@@ -60,7 +60,7 @@ resource "aws_security_group" "ubuntu_certbot" {
 
 resource "aws_security_group_rule" "ssh" {
   count = length(var.cidr_ingress_ssh_allow) > 0 ? 1 : 0
-  
+
   type              = "ingress"
   from_port         = 22
   to_port           = 22
