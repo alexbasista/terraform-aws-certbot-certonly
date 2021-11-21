@@ -30,15 +30,15 @@ locals {
   }
 }
 
-resource "aws_instance" "ubuntu_certbot" {
+resource "aws_instance" "certbotter" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   subnet_id                   = var.subnet_id
   associate_public_ip_address = true
-  vpc_security_group_ids      = [aws_security_group.ubuntu_certbot.id]
+  vpc_security_group_ids      = [aws_security_group.certbotter.id]
   key_name                    = var.ssh_key_pair
   user_data                   = templatefile("${path.module}/templates/user_data.sh.tpl", local.user_data_args)
-  iam_instance_profile        = aws_iam_instance_profile.ubuntu_certbot.name
+  iam_instance_profile        = aws_iam_instance_profile.certbotter.name
 
   root_block_device {
     delete_on_termination = true
@@ -47,18 +47,18 @@ resource "aws_instance" "ubuntu_certbot" {
   }
 
   tags = merge({
-    "Name" = "certbot-ec2"
+    "Name" = "certbotter-ec2"
     },
     var.common_tags
   )
 }
 
-resource "aws_security_group" "ubuntu_certbot" {
-  name   = "ubuntu-certbot-allow"
+resource "aws_security_group" "certbotter" {
+  name   = "certbotter-sg-allow"
   vpc_id = data.aws_subnet.subnet.vpc_id
 
   tags = merge({
-    "Name" = "certbot-sg"
+    "Name" = "certbotter-sg-allow"
     },
     var.common_tags
   )
@@ -72,7 +72,7 @@ resource "aws_security_group_rule" "ssh" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = var.cidr_ingress_ssh_allow
-  security_group_id = aws_security_group.ubuntu_certbot.id
+  security_group_id = aws_security_group.certbotter.id
 }
 
 resource "aws_security_group_rule" "http" {
@@ -81,7 +81,7 @@ resource "aws_security_group_rule" "http" {
   to_port           = 80
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.ubuntu_certbot.id
+  security_group_id = aws_security_group.certbotter.id
 }
 
 resource "aws_security_group_rule" "outbound" {
@@ -90,5 +90,5 @@ resource "aws_security_group_rule" "outbound" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.ubuntu_certbot.id
+  security_group_id = aws_security_group.certbotter.id
 }

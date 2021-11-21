@@ -2,10 +2,10 @@ data "aws_s3_bucket" "output_bucket" {
   bucket = var.output_bucket
 }
 
-resource "aws_iam_role" "ubuntu_certbot" {
-  name = "ubuntu-certbot-iam-role"
+resource "aws_iam_role" "certbotter" {
+  name = "certbotter-iam-role"
   tags = merge({
-    "Name" = "ubuntu-certbot-iam-role"
+    "Name" = "certbotter-iam-role"
     },
     var.common_tags
   )
@@ -27,10 +27,11 @@ resource "aws_iam_role" "ubuntu_certbot" {
 POLICY
 }
 
-resource "aws_iam_policy" "ubuntu_certbot" {
-  name = "ubuntu-certbot-iam-policy"
+resource "aws_iam_policy" "certbotter" {
+  name = "certbotter-iam-policy"
+  
   tags = merge({
-    "Name" = "ubuntu-certbot-iam-policy"
+    "Name" = "certbotter-iam-policy"
     },
     var.common_tags
   )
@@ -53,18 +54,19 @@ resource "aws_iam_policy" "ubuntu_certbot" {
 POLICY
 }
 
-resource "aws_iam_policy_attachment" "ubuntu_certbot" {
-  name       = "ubuntu-certbot-iam-policy-attachment"
-  roles      = [aws_iam_role.ubuntu_certbot.name]
-  policy_arn = aws_iam_policy.ubuntu_certbot.arn
+resource "aws_iam_policy_attachment" "certbotter" {
+  name       = "certbotter-iam-policy-attachment"
+  roles      = [aws_iam_role.certbotter.name]
+  policy_arn = aws_iam_policy.certbotter.arn
 }
 
-resource "aws_iam_instance_profile" "ubuntu_certbot" {
-  name = "ubuntu-certbot-instance-profile"
+resource "aws_iam_instance_profile" "certbotter" {
+  name = "certbotter-instance-profile"
   path = "/"
-  role = aws_iam_role.ubuntu_certbot.name
+  role = aws_iam_role.certbotter.name
+  
   tags = merge({
-    "Name" = "ubuntu-certbot-instance-profile"
+    "Name" = "certbotter-instance-profile"
     },
     var.common_tags
   )

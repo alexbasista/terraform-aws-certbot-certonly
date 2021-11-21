@@ -18,7 +18,7 @@ jobs:
       - name: Terraform Setup
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.0.3
+          terraform_version: 1.0.11
           cli_config_credentials_hostname: 'app.terraform.io'
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
           terraform_wrapper: true
@@ -43,4 +43,4 @@ jobs:
 
       - name: Terraform Destroy
         id: destroy
-        run: terraform destroy -force
+        run: terraform destroy -auto-approve

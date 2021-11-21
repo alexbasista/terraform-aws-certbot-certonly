@@ -8,5 +8,5 @@ resource "aws_route53_record" "dns" {
   zone_id = data.aws_route53_zone.public.zone_id
   type    = "A"
   ttl     = 60
-  records = [aws_instance.ubuntu_certbot.public_ip]
+  records = [aws_instance.certbotter.public_ip]
 }
