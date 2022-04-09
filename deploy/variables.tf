@@ -8,7 +8,7 @@ variable "cert_fqdn" {
 
 variable "cert_email" {
   type        = string
-  description = "Email address to associate with new CSR."
+  description = "Email address to associate with new certificate."
 }
 
 variable "route53_hosted_zone" {

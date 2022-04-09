@@ -1,0 +1,73 @@
+name: Certbotter
+
+on: workflow_dispatch
+  inputs:
+    cert_fqdn:
+      description: 'FQDN (Subject Common Name) for new certificate.'     
+      required: true
+    cert_email:
+      description: 'Email address to associate with new CSR.'
+      required: true
+    route53_hosted_zone:
+      description: 'Name of Route53 Hosted Zone to create DNS record for certifivate validation in.'
+      required: true
+    output_bucket:
+      description: 'Existing S3 bucket to write the certificate files to.'
+      required: true    
+
+defaults:
+  run:
+    working-directory: ./deploy
+
+jobs:
+  printInputs:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo "cert_fqdn: ${{ github.event.inputs.cert_fqdn }}"
+        echo "cert_email: ${{ github.event.inputs.cert_email }}"
+        echo "route53_hosted_zone: ${{ github.event.inputs.route53_hosted_zone }}"
+        echo "output_bucket: ${{ github.event.inputs.output_bucket }}"
+  
+  terraform:
+    name: Terraform Run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform init
+        id: init
+        run: terraform init
+
+      - name: Terraform plan
+        id: plan
+        run: |
+          terraform plan -no-color \
+            -var 'cert_fqdn=${{ github.event.inputs.cert_fqdn }}' \
+            -var 'cert_email=${{ github.event.inputs.cert_email }}' \
+            -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
+            -var 'output_bucket=${{ github.event.inputs.output_bucket }}'
+        continue-on-error: false
+
+      - name: Terraform apply
+        id: apply
+        run: |
+          terraform apply -auto-approve \
+            -var 'cert_fqdn=${{ github.event.inputs.cert_fqdn }}' \
+            -var 'cert_email=${{ github.event.inputs.cert_email }}' \
+            -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
+            -var 'output_bucket=${{ github.event.inputs.output_bucket }}'
+        continue-on-error: true
+
+      - name: Terraform destroy
+        id: destroy
+        run: |
+          terraform destroy -auto-approve \
+            -var 'cert_fqdn=${{ github.event.inputs.cert_fqdn }}' \
+            -var 'cert_email=${{ github.event.inputs.cert_email }}' \
+            -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
+            -var 'output_bucket=${{ github.event.inputs.output_bucket }}'

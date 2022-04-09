@@ -8,12 +8,12 @@ variable "cert_fqdn" {
 
 variable "cert_email" {
   type        = string
-  description = "Email address to associate with new certificate."
+  description = "Email address to associate with new CSR."
 }
 
 variable "route53_hosted_zone" {
   type        = string
-  description = "Route53 Hosted Zone to create DNS record in."
+  description = "Name of Route53 Hosted Zone to create DNS record for certifivate validation in."
 }
 
 variable "output_bucket" {
