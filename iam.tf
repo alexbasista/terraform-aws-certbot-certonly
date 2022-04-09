@@ -29,7 +29,7 @@ POLICY
 
 resource "aws_iam_policy" "certbotter" {
   name = "certbotter-iam-policy"
-  
+
   tags = merge({
     "Name" = "certbotter-iam-policy"
     },
@@ -64,7 +64,7 @@ resource "aws_iam_instance_profile" "certbotter" {
   name = "certbotter-instance-profile"
   path = "/"
   role = aws_iam_role.certbotter.name
-  
+
   tags = merge({
     "Name" = "certbotter-instance-profile"
     },

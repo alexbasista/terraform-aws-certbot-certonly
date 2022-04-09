@@ -19,6 +19,8 @@ data "aws_ami" "ubuntu" {
 }
 
 data "aws_subnet" "subnet" {
+  count = var.subnet_id == null ? 0 : 1
+
   id = var.subnet_id
 }
 
@@ -55,7 +57,7 @@ resource "aws_instance" "certbotter" {
 
 resource "aws_security_group" "certbotter" {
   name   = "certbotter-sg-allow"
-  vpc_id = data.aws_subnet.subnet.vpc_id
+  vpc_id = var.subnet_id == null ? null : data.aws_subnet.subnet[0].vpc_id
 
   tags = merge({
     "Name" = "certbotter-sg-allow"

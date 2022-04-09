@@ -1,3 +1,6 @@
+#------------------------------------------------------------------------------
+# Required Inputs
+#------------------------------------------------------------------------------
 variable "cert_fqdn" {
   type        = string
   description = "FQDN (Subject Common Name) for new certificate."
@@ -13,9 +16,18 @@ variable "route53_hosted_zone" {
   description = "Route53 Hosted Zone to create DNS record in."
 }
 
+variable "output_bucket" {
+  type        = string
+  description = "Existing S3 bucket to write the certificate files to."
+}
+
+#------------------------------------------------------------------------------
+# Optional Inputs
+#------------------------------------------------------------------------------
 variable "subnet_id" {
   type        = string
   description = "ID of Subnet to deploy EC2 instance in."
+  default     = null
 }
 
 variable "cidr_ingress_ssh_allow" {
@@ -30,18 +42,13 @@ variable "ssh_key_pair" {
   default     = null
 }
 
-variable "output_bucket" {
+variable "instance_type" {
   type        = string
-  description = "Existing S3 bucket to write the certificate files to."
+  description = "Size of EC2 instance."
+  default     = "t2.micro"
 }
 
 variable "common_tags" {
   type    = map(string)
   default = {}
-}
-
-variable "instance_type" {
-  type        = string
-  description = "Size of EC2 instance."
-  default     = "t2.micro"
 }
