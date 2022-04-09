@@ -1,19 +1,20 @@
 name: Certbotter
 
-on: workflow_dispatch:
-  inputs:
-    cert_fqdn:
-      description: 'FQDN (Subject Common Name) for new certificate.'     
-      required: true
-    cert_email:
-      description: 'Email address to associate with new CSR.'
-      required: true
-    route53_hosted_zone:
-      description: 'Name of Route53 Hosted Zone to create DNS record for certifivate validation in.'
-      required: true
-    output_bucket:
-      description: 'Existing S3 bucket to write the certificate files to.'
-      required: true    
+on: 
+  workflow_dispatch:
+    inputs:
+      cert_fqdn:
+        description: 'FQDN (Subject Common Name) for new certificate.'     
+        required: true
+      cert_email:
+        description: 'Email address to associate with new CSR.'
+        required: true
+      route53_hosted_zone:
+        description: 'Name of Route53 Hosted Zone to create DNS record for certifivate validation in.'
+        required: true
+      output_bucket:
+        description: 'Existing S3 bucket to write the certificate files to.'
+        required: true    
 
 defaults:
   run:
