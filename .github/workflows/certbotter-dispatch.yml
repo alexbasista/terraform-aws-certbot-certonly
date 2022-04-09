@@ -10,7 +10,7 @@ on:
         description: 'Email address'
         required: true
       route53_hosted_zone:
-        description: 'Route53 Hosted Zone Name (public)'
+        description: 'Route53 Hosted Zone name (public)'
         required: true
       output_bucket:
         description: 'Output S3 bucket'
@@ -33,12 +33,15 @@ jobs:
   terraform:
     name: Deploy
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Terraform setup
         uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       - name: Terraform init
         id: init
