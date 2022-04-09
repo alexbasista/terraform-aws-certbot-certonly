@@ -1,6 +1,6 @@
 name: Certbotter
 
-on: workflow_dispatch
+on: workflow_dispatch:
   inputs:
     cert_fqdn:
       description: 'FQDN (Subject Common Name) for new certificate.'     
@@ -30,7 +30,7 @@ jobs:
         echo "output_bucket: ${{ github.event.inputs.output_bucket }}"
   
   terraform:
-    name: Terraform Run
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
