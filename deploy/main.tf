@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 module "certbotter" {
-  source = "../.."
+  source = "../"
 
   cert_fqdn           = var.cert_fqdn
   cert_email          = var.cert_email
