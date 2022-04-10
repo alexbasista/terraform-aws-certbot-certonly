@@ -17,8 +17,8 @@ on:
         required: true    
 
 jobs:
-  printInputs:
-    name: Print inputs
+  displayInputs:
+    name: Display inputs
     runs-on: ubuntu-latest
     steps:
     - run: |
@@ -28,7 +28,7 @@ jobs:
         echo "output_bucket: ${{ github.event.inputs.output_bucket }}"
   
   terraform:
-    name: Deploy
+    name: Generate certs
     runs-on: ubuntu-latest
     env:
       working-directory: ./deploy
