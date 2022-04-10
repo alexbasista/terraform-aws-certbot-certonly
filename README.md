@@ -1,5 +1,5 @@
-# terraform-aws-certbotter
-Terraform module to automatically create a Let's Encrypt certificate via Certbot on an AWS EC2 instance, and then output (copy) the certificate files to an existing S3 bucket of choice.
+# Certbotter
+Terraform module to automatically generate a [Let's Encrypt](https://letsencrypt.org/) certificate via [Certbot](https://certbot.eff.org/) from within an AWS EC2 instance, and then output (copy) the certificate files to an existing S3 bucket of choice.
 
 ## Usage
 ```hcl
@@ -14,7 +14,7 @@ module "certbotter" {
 ```
 
 ## Roadmap
-- Add ability to output certs to Secrets Manager in specific formats
+- Add ability to output certs directly to AWS Secrets Manager
 - Add multi-cloud options
 
 
