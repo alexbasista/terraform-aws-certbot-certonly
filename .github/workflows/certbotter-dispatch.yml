@@ -16,12 +16,8 @@ on:
         description: 'Output S3 bucket'
         required: true    
 
-defaults:
-  run:
-    working-directory: ./deploy
-
 jobs:
-  printInputs:
+  print Inputs:
     runs-on: ubuntu-latest
     steps:
     - run: |
@@ -33,6 +29,8 @@ jobs:
   terraform:
     name: Deploy
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./deploy
 
     steps:
       - name: Checkout
@@ -46,6 +44,7 @@ jobs:
       - name: Terraform init
         id: init
         run: terraform init
+        working-directory: ${{ env.working-directory }}
 
       - name: Terraform plan
         id: plan
@@ -55,6 +54,7 @@ jobs:
             -var 'cert_email=${{ github.event.inputs.cert_email }}' \
             -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
             -var 'output_bucket=${{ github.event.inputs.output_bucket }}'
+        working-directory: ${{ env.working-directory }}
         continue-on-error: false
 
       - name: Terraform apply
@@ -65,6 +65,7 @@ jobs:
             -var 'cert_email=${{ github.event.inputs.cert_email }}' \
             -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
             -var 'output_bucket=${{ github.event.inputs.output_bucket }}'
+        working-directory: ${{ env.working-directory }}
         continue-on-error: true
 
       - name: Terraform destroy
@@ -75,3 +76,4 @@ jobs:
             -var 'cert_email=${{ github.event.inputs.cert_email }}' \
             -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
             -var 'output_bucket=${{ github.event.inputs.output_bucket }}'
+        working-directory: ${{ env.working-directory }}
