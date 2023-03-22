@@ -16,6 +16,7 @@ rm -rf ./awscliv2.zip
 # certbot command
 echo "INFO: BEGINNING CERTBOT TASK."
 certbot certonly \
+  --preferred-chain "ISRG Root X1" \
   --non-interactive \
   --standalone \
   --preferred-challenges http \
