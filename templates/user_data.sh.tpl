@@ -4,8 +4,13 @@
 set -euo pipefail
 
 # install and update packages
+echo "[INFO] Beginning user_data script."
 apt-get update -y
-apt-get install -y unzip certbot
+apt-get install -y unzip
+snap install core
+snap refresh core
+snap install --classic certbot
+ln -s /snap/bin/certbot /usr/bin/certbot
 
 # install AWSCLI
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -14,14 +19,14 @@ unzip -qq awscliv2.zip
 rm -rf ./awscliv2.zip
 
 # certbot command
-echo "INFO: BEGINNING CERTBOT TASK."
+echo "[INFO] Running certbot."
 certbot certonly \
-  --preferred-chain "ISRG Root X1" \
+  --key-type rsa \
   --non-interactive \
   --standalone \
   --preferred-challenges http \
   --domain ${cert_fqdn} \
-  -m ${cert_email} \
+  --email ${cert_email} \
   --agree-tos \
   --no-eff-email
 
