@@ -18,4 +18,5 @@ module "certbotter" {
   cert_email          = var.cert_email
   route53_hosted_zone = var.route53_hosted_zone
   output_bucket       = var.output_bucket
+  common_tags         = var.common_tags 
 }
