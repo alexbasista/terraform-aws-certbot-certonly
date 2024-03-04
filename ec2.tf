@@ -19,26 +19,26 @@ data "aws_ami" "ubuntu" {
 }
 
 data "aws_subnet" "subnet" {
-  count = var.subnet_id == null ? 0 : 1
+  count = var.ec2_subnet_id == null ? 0 : 1
 
-  id = var.subnet_id
+  id = var.ec2_subnet_id
 }
 
 locals {
   user_data_args = {
     cert_fqdn     = var.cert_fqdn
     cert_email    = var.cert_email
-    output_bucket = var.output_bucket
+    output_bucket = var.s3_output_bucket
   }
 }
 
 resource "aws_instance" "certbotter" {
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.instance_type
-  subnet_id                   = var.subnet_id
+  instance_type               = var.ec2_instance_type
+  subnet_id                   = var.ec2_subnet_id
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.certbotter.id]
-  key_name                    = var.ssh_key_pair
+  key_name                    = var.ec2_ssh_key_pair
   user_data                   = templatefile("${path.module}/templates/user_data.sh.tpl", local.user_data_args)
   iam_instance_profile        = aws_iam_instance_profile.certbotter.name
 
@@ -57,7 +57,7 @@ resource "aws_instance" "certbotter" {
 
 resource "aws_security_group" "certbotter" {
   name   = "certbotter-sg-allow"
-  vpc_id = var.subnet_id == null ? null : data.aws_subnet.subnet[0].vpc_id
+  vpc_id = var.ec2_subnet_id == null ? null : data.aws_subnet.subnet[0].vpc_id
 
   tags = merge({
     "Name" = "certbotter-sg-allow"

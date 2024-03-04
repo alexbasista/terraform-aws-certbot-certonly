@@ -1,5 +1,5 @@
 data "aws_s3_bucket" "output_bucket" {
-  bucket = var.output_bucket
+  bucket = var.s3_output_bucket
 }
 
 resource "aws_iam_role" "certbotter" {

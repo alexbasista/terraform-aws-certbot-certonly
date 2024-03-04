@@ -19,5 +19,5 @@ module "certbotter" {
   route53_hosted_zone    = var.route53_hosted_zone
   output_bucket          = var.output_bucket
   cidr_ingress_ssh_allow = var.cidr_ingress_ssh_allow
-  ssh_key_pair           = var.ssh_key_pair 
+  ssh_key_pair           = var.ssh_key_pair
 }
