@@ -30,7 +30,7 @@ resource "aws_route53_record" "dns" {
 #------------------------------------------------------------------------------
 # Azure
 #------------------------------------------------------------------------------
-resource "azurerm_private_dns_a_record" "public" {
+resource "azurerm_dns_a_record" "public" {
   count = var.cloud_provider_dns == "azure" ? 1 : 0
 
   name                = local.azure_hostname
