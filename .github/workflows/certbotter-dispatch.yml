@@ -69,7 +69,7 @@ jobs:
       - name: Terraform apply
         id: apply
         run: |
-          terraform apply "tfplan" -auto-approve
+          terraform apply "tfplan"
 
         working-directory: ${{ env.working-directory }}
         continue-on-error: true
