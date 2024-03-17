@@ -54,7 +54,7 @@ jobs:
       - name: Terraform plan
         id: plan
         run: |
-          terraform plan -no-color -out tfplan \
+          terraform plan -no-color -out="tfplan" \
             -var 'cert_fqdn=${{ github.event.inputs.cert_fqdn }}' \
             -var 'cert_email=${{ github.event.inputs.cert_email }}' \
             -var 's3_output_bucket=${{ github.event.inputs.s3_output_bucket }}' \
