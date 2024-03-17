@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------
 locals {
   aws_hostname = var.cloud_provider_dns == "aws" && var.route53_hosted_zone != null ? trimsuffix(substr(var.cert_fqdn, 0, length(var.cert_fqdn) - length(var.route53_hosted_zone) - 1), ".") : null
-  
+
   azure_hostname = var.cloud_provider_dns == "azure" && var.azure_dns_zone_name != null ? trimsuffix(substr(var.cert_fqdn, 0, length(var.cert_fqdn) - length(var.azure_dns_zone_name) - 1), ".") : null
 }
 

@@ -39,6 +39,10 @@ module "certbotter" {
   cert_email       = var.cert_email
   s3_output_bucket = var.s3_output_bucket
 
+  # --- EC2 --- #
+  ec2_ssh_key_pair       = var.ec2_ssh_key_pair
+  cidr_ingress_ssh_allow = var.cidr_ingress_ssh_allow
+
   # --- Common --- #
   common_tags = var.common_tags
 }
