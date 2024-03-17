@@ -17,9 +17,9 @@ variable "s3_output_bucket" {
 }
 
 #------------------------------------------------------------------------------
-# Optional Inputs
+# Cloud Provider DNS
 #------------------------------------------------------------------------------
-variable "cloud_provider" {
+variable "cloud_provider_dns" {
   type        = string
   description = "Which cloud provider to create DNS record for DNS challenge in. Choose from 'aws' or 'azure'."
   default     = "aws"
@@ -43,6 +43,9 @@ variable "azure_dns_zone_rg" {
   default     = null
 }
 
+#------------------------------------------------------------------------------
+# EC2
+#------------------------------------------------------------------------------
 variable "ec2_subnet_id" {
   type        = string
   description = "ID of Subnet to deploy EC2 instance in."

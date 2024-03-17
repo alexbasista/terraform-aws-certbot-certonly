@@ -12,7 +12,7 @@ on:
       s3_output_bucket:
         description: 'S3 Output bucket'
         required: true
-      cloud_provider:
+      cloud_provider_dns:
         description: 'AWS or Azure for DNS challenge'
         required: true
         default: 'aws'
@@ -25,6 +25,10 @@ on:
       azure_dns_zone_rg:
           description: 'Azure DNS Zone resource group'
           required: false
+      run_tf_destroy:
+          description: 'Run Terraform destroy'
+          required: false
+          default: 'true'
 
 jobs:
   displayInputs:
@@ -35,7 +39,7 @@ jobs:
         echo "cert_fqdn: ${{ github.event.inputs.cert_fqdn }}"
         echo "cert_email: ${{ github.event.inputs.cert_email }}"
         echo "s3_output_bucket: ${{ github.event.inputs.s3_output_bucket }}"
-        echo "cloud_provider: ${{ github.event.inputs.cloud_provider }}"
+        echo "cloud_provider_dns: ${{ github.event.inputs.cloud_provider_dns }}"
         echo "route53_hosted_zone: ${{ github.event.inputs.route53_hosted_zone }}"
         echo "azure_dns_zone_name: ${{ github.event.inputs.azure_dns_zone_name }}"
         echo "azure_dns_zone_rg: ${{ github.event.inputs.azure_dns_zone_rg }}"
@@ -67,7 +71,7 @@ jobs:
             -var 'cert_fqdn=${{ github.event.inputs.cert_fqdn }}' \
             -var 'cert_email=${{ github.event.inputs.cert_email }}' \
             -var 's3_output_bucket=${{ github.event.inputs.s3_output_bucket }}' \
-            -var 'cloud_provider=${{ github.event.inputs.cloud_provider }}' \
+            -var 'cloud_provider_dns=${{ github.event.inputs.cloud_provider_dns }}' \
             -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
             -var 'azure_dns_zone_name=${{ github.event.inputs.azure_dns_zone_name }}' \
             -var 'azure_dns_zone_rg=${{ github.event.inputs.azure_dns_zone_rg }}'
@@ -83,7 +87,7 @@ jobs:
             -var 'cert_email=${{ github.event.inputs.cert_email }}' \
             -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
             -var 's3_output_bucket=${{ github.event.inputs.s3_output_bucket }}' \
-            -var 'cloud_provider=${{ github.event.inputs.cloud_provider }}' \
+            -var 'cloud_provider_dns=${{ github.event.inputs.cloud_provider_dns }}' \
             -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
             -var 'azure_dns_zone_name=${{ github.event.inputs.azure_dns_zone_name }}' \
             -var 'azure_dns_zone_rg=${{ github.event.inputs.azure_dns_zone_rg }}'
@@ -92,13 +96,14 @@ jobs:
         continue-on-error: true
 
       - name: Terraform destroy
+        if: ${{ github.event.inputs.run_tf_destroy == 'true' }}
         id: destroy
         run: |
           terraform destroy -auto-approve \
             -var 'cert_fqdn=${{ github.event.inputs.cert_fqdn }}' \
             -var 'cert_email=${{ github.event.inputs.cert_email }}' \
             -var 's3_output_bucket=${{ github.event.inputs.s3_output_bucket }}'
-            -var 'cloud_provider=${{ github.event.inputs.cloud_provider }}' \
+            -var 'cloud_provider_dns=${{ github.event.inputs.cloud_provider_dns }}' \
             -var 'route53_hosted_zone=${{ github.event.inputs.route53_hosted_zone }}' \
             -var 'azure_dns_zone_name=${{ github.event.inputs.azure_dns_zone_name }}' \
             -var 'azure_dns_zone_rg=${{ github.event.inputs.azure_dns_zone_rg }}'

@@ -2,11 +2,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.39.1"
+      version = "~> 5.41.0"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.94.0"
+      version = "~> 3.95.0"
     }
   }
 }
@@ -29,7 +29,7 @@ module "certbotter" {
   source = "../"
 
   # --- DNS --- #
-  cloud_provider      = var.cloud_provider
+  cloud_provider_dns  = var.cloud_provider_dns
   route53_hosted_zone = var.route53_hosted_zone
   azure_dns_zone_name = var.azure_dns_zone_name
   azure_dns_zone_rg   = var.azure_dns_zone_rg
