@@ -27,6 +27,6 @@ resource "azurerm_private_dns_a_record" "public" {
   name                = azurerm_redis_cache.tfe.name
   resource_group_name = var.azure_dns_zone_rg
   zone_name           = var.azure_dns_zone_name
-  ttl                 = 300
+  ttl                 = 60
   records             = [aws_instance.certbotter.public_ip]
 }
