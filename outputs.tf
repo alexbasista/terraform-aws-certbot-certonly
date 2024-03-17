@@ -1,5 +1,5 @@
 output "aws_hostname" {
-  value = trylocal.aws_hostname
+  value = local.aws_hostname
 }
 
 output "azure_hostname" {
