@@ -19,12 +19,15 @@ on:
       route53_hosted_zone:
           description: 'Route53 Hosted Zone name (public)'
           required: false
+          default: null
       azure_dns_zone_name:
           description: 'Azure DNS Zone name (public)'
           required: false
+          default: null
       azure_dns_zone_rg:
           description: 'Azure DNS Zone resource group'
           required: false
+          default: null
       run_tf_destroy:
           description: 'Run Terraform destroy'
           required: false
